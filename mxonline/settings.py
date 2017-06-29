@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,7 +46,9 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha',
+
 
 ]
 
@@ -65,7 +70,7 @@ ROOT_URLCONF = 'mxonline.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates').replace("//", "/")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,3 +140,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join('static'),)
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload').replace("//", "/")
+
+EMAIL_HOST = "smtp.sina.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "projectsedu@sina.com"
+EMAIL_HOST_PASSWORD = "admin123"
+EMAIL_USE_TLS = False
+EMAIL_FROM = "projectsedu@sina.com"
