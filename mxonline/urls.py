@@ -1,3 +1,4 @@
+# _*_ encoding:utf-8 _*_
 """mxonline URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,9 +18,11 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import TemplateView
 import xadmin
+from django.views.static import serve
 
 from users.views import *
-
+from organization.views import *
+from mxonline.settings import MEDIA_ROOT
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url('^$', TemplateView.as_view(template_name="index.html"), name='index'),
@@ -30,4 +33,8 @@ urlpatterns = [
     url(r'^forget/$',ForgetPwdView.as_view(), name='forget_pwd'),
     url(r'^reset/(?P<reset_code>.*)/$',ResetView.as_view(), name='reset_pwd'),
     url(r'^modify_pwd/$',ModifyPwdView.as_view(), name='modify_pwd'),
+
+    url(r'^org/', include('organization.urls', namespace='org')),
+
+    url(r'^upload/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 ]
